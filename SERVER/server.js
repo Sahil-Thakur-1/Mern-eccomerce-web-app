@@ -6,7 +6,6 @@ dotenv.config({
     path: './.env',
 });
 
-
 connectDb();
 
 const PORT = process.env.PORT || 8080;

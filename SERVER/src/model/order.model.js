@@ -1,0 +1,48 @@
+import mongoose, { Schema } from "mongoose";
+
+const orderSchema = new Schema(
+    {
+        userId: {
+            type: mongoose.Types.ObjectId,
+            ref: 'User',
+            required: true,
+        },
+        products: [
+            {
+                productId: {
+                    type: mongoose.Types.ObjectId,
+                    ref: 'Product',
+                },
+                name: { type: String, required: true },
+                price: { type: Number, required: true },
+                image: { type: String },
+                quantity: { type: Number, default: 1 },
+            },
+        ],
+        totalAmount: { type: Number, required: true },
+        paymentStatus: {
+            type: String,
+            enum: ['pending', 'completed', 'failed'],
+            default: 'pending',
+        },
+        orderStatus: {
+            type: String,
+            enum: ['processing', 'shipped', 'delivered', 'cancelled'],
+            default: 'processing',
+        },
+        shippingAddress: {
+            name: String,
+            street: String,
+            city: String,
+            state: String,
+            postalCode: String,
+            country: String,
+            phone: String,
+        },
+    },
+    { timestamps: true }
+);
+
+const Order = mongoose.model('Order', orderSchema);
+
+export default Order;
