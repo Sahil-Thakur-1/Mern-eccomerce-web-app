@@ -43,14 +43,14 @@ const loginUser = createAsyncThunk(
 
 const verifyUser = createAsyncThunk(
     'auth/verifyUser',
-    async () => {
+    async (_, { rejectWithValue }) => {
         try {
-            const res = await axios.get('http://localhost:3000/auth/refresh',
-                { withCredentials: true });
+            const res = await axios.get('http://localhost:3000/auth/refresh', {
+                withCredentials: true,
+            });
             return res.data;
-        }
-        catch (error) {
-            return error.response?.data || error;
+        } catch (error) {
+            return rejectWithValue(error.response?.data || "Unauthorized");
         }
     }
 );

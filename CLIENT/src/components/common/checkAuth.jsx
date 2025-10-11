@@ -5,9 +5,9 @@ export function CheckAuth({ isAuthenticated, user, children, isLoading }) {
 
     console.log(location.pathname, isAuthenticated, isLoading, user);
 
-    // if (!isAuthenticated && !user) {
-    //     return <Navigate to="/auth/login" />;
-    // }
+    if (isAuthenticated == false && !user && !location.pathname.includes('/auth/login')) {
+        return <Navigate to="/auth/login" />;
+    }
 
     if (isLoading && !isAuthenticated) {
         return <div className='flex flex-col justify-center items-center min-h-screen'>

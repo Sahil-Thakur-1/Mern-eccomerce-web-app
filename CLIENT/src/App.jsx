@@ -27,9 +27,13 @@ import ProductDetail from './pages/shop/productDetail'
 function App() {
   let { isAuthenticated, user, isLoading } = useSelector(state => state.auth);
   const dispactch = useDispatch();
+  let reload = false;
 
   useEffect(() => {
-    dispactch(verifyUser());
+    if (reload == false) {
+      dispactch(verifyUser());
+    }
+    reload = true;
   }, [dispactch]);
 
   return (<>

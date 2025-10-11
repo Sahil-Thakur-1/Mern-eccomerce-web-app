@@ -168,11 +168,11 @@ const Listing = () => {
                         </div>
 
                         {/* Load More */}
-                        <div className="mt-20 text-center">
+                        {/* <div className="mt-20 text-center">
                             <button className="px-16 py-4 text-xs font-medium uppercase tracking-widest border border-white/10 hover:bg-white hover:text-black transition">
                                 Load More
                             </button>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
