@@ -1,9 +1,15 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "../../../features/shop/productSlice";
 
 
 const NewArrivals = () => {
     const { products } = useSelector(state => state.product);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(fetchProducts());
+    }, [dispatch])
     return (
         <section className="w-full bg-[#0f0f0f] text-white py-24 flex flex-col items-center">
             {/* Section Title */}

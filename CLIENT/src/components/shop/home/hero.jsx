@@ -1,8 +1,10 @@
 import React from 'react'
 
 import { ArrowRight } from "lucide-react";
+import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
+    const navigate = useNavigate();
     return (
         <div className="relative flex flex-col items-center justify-center h-screen w-full bg-[#0f0f0f] overflow-hidden">
             {/* Black Text */}
@@ -30,7 +32,7 @@ const Hero = () => {
                 <p className="text-gray-300 text-xs mt-2">
                     High quality cool t-shirts for street fashion
                 </p>
-                <button className="text-white text-sm flex flex-row items-center justify-center gap-2 mt-4 border border-white rounded-full px-6 py-2 hover:bg-[#007bff] hover:border-[#007bff] hover:text-white transition-all duration-300">
+                <button onClick={() => navigate('/shop/products')} className="text-white text-sm flex flex-row items-center justify-center gap-2 mt-4 border border-white rounded-full px-6 py-2 hover:bg-[#007bff] hover:border-[#007bff] hover:text-white transition-all duration-300">
                     Start Shopping <ArrowRight size={16} />
                 </button>
             </div>

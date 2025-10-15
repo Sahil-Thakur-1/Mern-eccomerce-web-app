@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ShoppingBag, Search, User } from "lucide-react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../features/auth/authSlice";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { fetchCart } from "../../features/shop/cartSlice";
 
 const ShopHeader = () => {
-    const dispactch = useDispatch();
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { cart } = useSelector(state => state.cart);
+    useEffect(() => {
+        dispatch(fetchCart());
+    }, [dispatch])
     return (
         <header className="fixed top-0 left-0 w-full z-50 text-white ">
             <div className=" mx-auto px-10 py-4 flex items-end justify-between">
@@ -32,12 +37,12 @@ const ShopHeader = () => {
                         <Search size={22} />
                     </button>
                     <button className="hover:text-gray-300 transition">
-                        <User size={22} onClick={() => dispactch(logout())} />
+                        <User size={22} onClick={() => navigate('/shop/account')} />
                     </button>
                     <button onClick={() => navigate('/shop/cart')} className="hover:text-gray-300 transition relative">
                         <ShoppingBag size={22} />
                         <span className="absolute -top-2 -right-2 bg-white text-black text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                            2
+                            {cart?.length ?? 0}
                         </span>
                     </button>
                 </div>

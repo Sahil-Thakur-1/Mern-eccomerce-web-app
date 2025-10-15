@@ -1,18 +1,17 @@
 import { useLocation, Navigate } from "react-router-dom";
+import LoadingScreen from "./loading";
 
 export function CheckAuth({ isAuthenticated, user, children, isLoading }) {
     const location = useLocation();
 
     console.log(location.pathname, isAuthenticated, isLoading, user);
 
-    if (isAuthenticated == false && !user && !location.pathname.includes('/auth/login')) {
-        return <Navigate to="/auth/login" />;
-    }
+    // if (isAuthenticated == false && !user && !location.pathname.includes('/auth/login')) {
+    //     return <Navigate to="/auth/login" />;
+    // }
 
     if (isLoading && !isAuthenticated) {
-        return <div className='flex flex-col justify-center items-center min-h-screen'>
-            <h2 className='font-bold text-3xl'>....isLoading</h2>
-        </div>;
+        return <LoadingScreen />;
     }
 
 

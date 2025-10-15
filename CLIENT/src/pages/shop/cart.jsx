@@ -2,14 +2,15 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Trash2, Plus, Minus, ShoppingBag, Tag } from "lucide-react";
 import { fetchCart, addToCart, deleteFromCart } from "../../features/shop/cartSlice";
+import LoadingScreen from "../../components/common/loading";
 
 const Cart = () => {
     const dispatch = useDispatch();
     const { cart, totalAmount, isLoading } = useSelector((state) => state.cart);
 
-    useEffect(() => {
-        dispatch(fetchCart());
-    }, [dispatch]);
+    // useEffect(() => {
+    //     dispatch(fetchCart());
+    // }, [dispatch]);
 
     const handleQuantityChange = (productId, change) => {
         const item = cart.find((i) => i.productId._id === productId);
@@ -32,9 +33,7 @@ const Cart = () => {
 
     if (isLoading) {
         return (
-            <div className="w-full min-h-screen flex items-center justify-center text-white">
-                Loading...
-            </div>
+            <LoadingScreen />
         );
     }
 
