@@ -97,7 +97,7 @@ const cartSlice = createSlice({
                 state.isLoading = false;
                 if (action.payload.success) {
                     state.cart = action.payload.cart;
-                    state.totalAmount = action.payload.totalAmount || 0;
+                    state.totalAmount = action.payload.cart.totalAmount || 0;
                 } else {
                     state.cart = [];
                     state.totalAmount = 0;
@@ -120,7 +120,7 @@ const cartSlice = createSlice({
                 if (action.payload.success) {
                     state.cart = action.payload.cart.products || state.cart;
                     state.totalAmount = action.payload.cart.products?.reduce(
-                        (acc, item) => acc + (item.productId?.price || 0) * item.quantity,
+                        (acc, item) => acc + (item?.price || 0) * item.quantity,
                         0
                     ) || state.totalAmount;
                 } else {

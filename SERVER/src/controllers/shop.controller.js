@@ -1,3 +1,4 @@
+import { verifyUser } from "../../../CLIENT/src/features/auth/authSlice.js";
 import { Address } from "../model/address.model.js";
 import { User } from "../model/user.model.js";
 
@@ -5,16 +6,19 @@ class ShopController {
 
     async addAddress(req, res) {
         try {
-            const { fullName,
-                phoneNumber,
-                streetAddress, landmark,
+            const {
+                name,
+                phone,
+                street,
+                landmark,
                 city,
                 state,
                 postalCode,
-                country,
-                defaultAddress } = req.body;
+                country
+            } = req.body;
             const user = req.user;
-            if (!fullName || !phoneNumber || !streetAddress || !city || !state || !postalCode) {
+
+            if (!name || !phone || !street || !city || !state || !postalCode) {
                 return res.status(400).json({ success: false, message: "All fields are required" });
             }
             const verified = await User.findById(user.userId);
@@ -22,18 +26,19 @@ class ShopController {
                 return res.status(404).json({ success: false, message: "user not found" });
 
             }
+            const isDefault = await Address.findOne({ userId: verified._id });
             const addressData = {
-                fullName: fullName,
-                phoneNumber: phoneNumber,
-                streetAddress: streetAddress,
+                fullName: name,
+                phoneNumber: phone,
+                streetAddress: street,
                 landmark: landmark,
                 city: city,
                 state: state,
                 postalCode: postalCode,
                 country: country,
                 userId: verified._id,
-                isDefault: !defaultAddress ? true : false
-            }
+                isDefault: !isDefault ? true : false
+            };
             const address = new Address(addressData);
             await address.save();
             return res.status(201).json({ success: true, address: address, message: "Address added succesfully" });
@@ -46,14 +51,17 @@ class ShopController {
 
     async editAddress(req, res) {
         try {
-            const { fullName,
-                phoneNumber,
-                streetAddress, landmark,
+            const {
+                name,
+                phone,
+                street,
+                landmark,
                 city,
                 state,
                 postalCode,
                 country,
-                addressId } = req.body;
+                addressId
+            } = req.body;
             const user = req.user;
             if (addressId == null) {
                 return res.status(400).json({ success: false, message: "Address Id are required" });
@@ -64,15 +72,14 @@ class ShopController {
 
             }
             const addressData = {
-                fullName: fullName,
-                phoneNumber: phoneNumber,
-                streetAddress: streetAddress,
+                fullName: name,
+                phoneNumber: phone,
+                streetAddress: street,
                 landmark: landmark,
                 city: city,
                 state: state,
                 postalCode: postalCode,
-                country: country,
-                isDefault: !defaultAddress ? true : false
+                country: country
             }
             const address = await Address.findOneAndUpdate(
                 { _id: addressId, userId: verified._id },

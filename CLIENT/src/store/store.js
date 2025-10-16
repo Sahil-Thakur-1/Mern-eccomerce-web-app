@@ -4,6 +4,8 @@ import productReducer from "@/features/shop/productSlice";
 import modalReducer from "@/features/common/modalSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import cartReducer from "@/features/shop/cartSlice";
+import addressReducer from "@/features/shop/addressSlice";
+import orderReducer from "@/features/common/orderSlice";
 
 const store = configureStore({
     reducer: {
@@ -11,7 +13,9 @@ const store = configureStore({
         category: categoryReducer,
         modal: modalReducer,
         product: productReducer,
-        cart: cartReducer
+        cart: cartReducer,
+        address: addressReducer,
+        order: orderReducer,
     }
 });
 

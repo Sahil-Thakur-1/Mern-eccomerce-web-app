@@ -4,14 +4,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../features/auth/authSlice";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { fetchCart } from "../../features/shop/cartSlice";
+import LoadingScreen from "../common/loading";
 
 const ShopHeader = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { cart } = useSelector(state => state.cart);
+    const { cart, isLoading } = useSelector(state => state.cart);
     useEffect(() => {
         dispatch(fetchCart());
     }, [dispatch])
+    // if (isLoading) {
+    //     return <LoadingScreen />
+    // }
     return (
         <header className="fixed top-0 left-0 w-full z-50 text-white ">
             <div className=" mx-auto px-10 py-4 flex items-end justify-between">
@@ -42,7 +46,7 @@ const ShopHeader = () => {
                     <button onClick={() => navigate('/shop/cart')} className="hover:text-gray-300 transition relative">
                         <ShoppingBag size={22} />
                         <span className="absolute -top-2 -right-2 bg-white text-black text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                            {cart?.length ?? 0}
+                            {cart?.products.length ?? 0}
                         </span>
                     </button>
                 </div>

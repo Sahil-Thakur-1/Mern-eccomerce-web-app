@@ -23,17 +23,14 @@ import AddEditCategory from './pages/admin/addEditCategory'
 import ModalContainer from './components/common/modal'
 import Cart from './pages/shop/cart'
 import ProductDetail from './pages/shop/productDetail'
+import CheckoutScreen from './pages/shop/checkout'
 
 function App() {
   let { isAuthenticated, user, isLoading } = useSelector(state => state.auth);
   const dispactch = useDispatch();
-  let reload = false;
 
   useEffect(() => {
-    if (reload == false) {
-      dispactch(verifyUser());
-    }
-    reload = true;
+    dispactch(verifyUser());
   }, [dispactch]);
 
   return (<>
@@ -66,6 +63,7 @@ function App() {
           <Route path='cart' element={<Cart />} />
           <Route path='product/:id' element={<ProductDetail />} />
           <Route path='products' element={<Listing />} />
+          <Route path='checkout' element={<CheckoutScreen />} />
         </Route>
         <Route path='/unAuth' element={<UnAuth />} />
       </Routes >

@@ -103,6 +103,19 @@ class CartController {
                     select: "name price image",
                 });
 
+            let newCart = { products: [], totalAmount: null };
+
+            cart.products.forEach((item) => {
+                newCart.products.push({
+                    productId: String(item.productId._id),
+                    name: item.productId.name,
+                    image: item.productId.image,
+                    price: item.productId.price,
+                    quantity: item.quantity,
+                });
+            });
+
+
             if (!cart || cart.products.length === 0) {
                 return res.status(200).json({ success: true, message: "Cart is empty", cart: [] });
             }
@@ -112,11 +125,12 @@ class CartController {
                 return acc + price * item.quantity;
             }, 0);
 
+            newCart.totalAmount = totalAmount;
+
             return res.status(200).json({
                 success: true,
                 message: "Active cart fetched successfully",
-                cart: cart.products,
-                totalAmount,
+                cart: newCart
             });
 
         } catch (e) {

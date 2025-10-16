@@ -3,9 +3,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { Trash2, Plus, Minus, ShoppingBag, Tag } from "lucide-react";
 import { fetchCart, addToCart, deleteFromCart } from "../../features/shop/cartSlice";
 import LoadingScreen from "../../components/common/loading";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { cart, totalAmount, isLoading } = useSelector((state) => state.cart);
 
     // useEffect(() => {
@@ -67,17 +69,17 @@ const Cart = () => {
                 <div className="grid lg:grid-cols-3 gap-6">
                     {/* Cart Items */}
                     <div className="lg:col-span-2 space-y-4">
-                        {cart.map((item) => (
+                        {cart.products.map((item) => (
                             <div
-                                key={item.productId._id}
+                                key={item.productId}
                                 className="group bg-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/30 hover:border-[#007bff] transition-all duration-300"
                             >
                                 <div className="flex gap-5">
                                     {/* Product Image */}
                                     <div className="relative w-28 h-28 rounded-xl overflow-hidden bg-white/5 flex-shrink-0">
                                         <img
-                                            src={item.productId.image}
-                                            alt={item.productId.name}
+                                            src={item.image}
+                                            alt={item.name}
                                             className="w-full h-full object-cover transition-all duration-300"
                                         />
                                     </div>
@@ -86,13 +88,13 @@ const Cart = () => {
                                     <div className="flex-1 flex flex-col justify-between">
                                         <div>
                                             <h3 className="text-lg font-semibold text-white mb-1">
-                                                {item.productId.name}
+                                                {item.name}
                                             </h3>
-                                            <div className="flex items-center gap-3 text-sm text-gray-400">
+                                            {/* <div className="flex items-center gap-3 text-sm text-gray-400">
                                                 <span className="px-2 py-0.5 bg-white/10 rounded border border-white/20">
                                                     Size: {item.size || "M"}
                                                 </span>
-                                            </div>
+                                            </div> */}
                                         </div>
 
                                         <div className="flex items-end justify-between mt-4">
@@ -112,7 +114,7 @@ const Cart = () => {
                                                     </span>
                                                     <button
                                                         onClick={() =>
-                                                            handleQuantityChange(item.productId._id, +1)
+                                                            handleQuantityChange(item.productId, +1)
                                                         }
                                                         className="px-3 py-1.5 hover:bg-[#007bff]/20 transition-colors"
                                                     >
@@ -121,7 +123,7 @@ const Cart = () => {
                                                 </div>
 
                                                 <button
-                                                    onClick={() => handleRemoveItem(item.productId._id)}
+                                                    onClick={() => handleRemoveItem(item.productId)}
                                                     className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-colors"
                                                 >
                                                     <Trash2 size={18} />
@@ -131,10 +133,10 @@ const Cart = () => {
                                             {/* Price */}
                                             <div className="text-right">
                                                 <p className="text-xl font-bold text-[#007bff]">
-                                                    ₹{(item.productId.price * item.quantity).toLocaleString()}
+                                                    ₹{(item.price * item.quantity).toLocaleString()}
                                                 </p>
                                                 <p className="text-xs text-gray-500">
-                                                    ₹{item.productId.price} each
+                                                    ₹{item.price} each
                                                 </p>
                                             </div>
                                         </div>
@@ -181,7 +183,7 @@ const Cart = () => {
                                 </div>
                             </div>
 
-                            <button className="w-full py-4 rounded-full bg-[#007bff] text-white font-semibold hover:bg-[#007bff]/80 transition-all duration-300">
+                            <button onClick={() => navigate('../../shop/checkout')} className="w-full py-4 rounded-full bg-[#007bff] text-white font-semibold hover:bg-[#007bff]/80 transition-all duration-300">
                                 Proceed to Checkout
                             </button>
 

@@ -205,7 +205,7 @@ const Listing = () => {
                                                 <p className="text-sm text-white/50">Rs. {product.price}</p>
                                             </div>
                                             {(() => {
-                                                const index = cart.findIndex(item => item.productId._id === product._id);
+                                                const index = cart.products.findIndex(item => item.productId === product._id);
 
                                                 if (index !== -1) {
                                                     return (
@@ -224,7 +224,7 @@ const Listing = () => {
                                                             >
                                                                 +
                                                             </button>
-                                                            <span className="text-white font-bold">{cart[index].quantity}</span>
+                                                            <span className="text-white font-bold">{cart.products[index].quantity}</span>
                                                             <button
                                                                 type="button"
                                                                 onClick={() => {
