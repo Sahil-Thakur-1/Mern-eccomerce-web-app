@@ -118,11 +118,8 @@ const cartSlice = createSlice({
             .addCase(addToCart.fulfilled, (state, action) => {
                 state.isLoading = false;
                 if (action.payload.success) {
-                    state.cart = action.payload.cart.products || state.cart;
-                    state.totalAmount = action.payload.cart.products?.reduce(
-                        (acc, item) => acc + (item?.price || 0) * item.quantity,
-                        0
-                    ) || state.totalAmount;
+                    state.cart = action.payload.cart;
+                    state.totalAmount = action.payload.cart.totalAmount;
                 } else {
                     state.error = action.payload.message;
                 }

@@ -13,9 +13,9 @@ const ShopHeader = () => {
     useEffect(() => {
         dispatch(fetchCart());
     }, [dispatch])
-    // if (isLoading) {
-    //     return <LoadingScreen />
-    // }
+    if (isLoading) {
+        return <LoadingScreen />
+    }
     return (
         <header className="fixed top-0 left-0 w-full z-50 text-white ">
             <div className=" mx-auto px-10 py-4 flex items-end justify-between">

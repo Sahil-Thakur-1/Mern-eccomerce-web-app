@@ -43,13 +43,13 @@ const orderSchema = new Schema(
             default: 'processing',
         },
         shippingAddress: {
-            name: String,
-            street: String,
+            fullName: String,
+            streetAddress: String,
             city: String,
             state: String,
             postalCode: String,
             country: String,
-            phone: String,
+            phoneNumber: String,
         },
     },
     { timestamps: true }

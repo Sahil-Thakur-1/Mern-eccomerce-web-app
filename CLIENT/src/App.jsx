@@ -24,6 +24,11 @@ import ModalContainer from './components/common/modal'
 import Cart from './pages/shop/cart'
 import ProductDetail from './pages/shop/productDetail'
 import CheckoutScreen from './pages/shop/checkout'
+import PaymentSuccess from './pages/shop/paymentSucess'
+import PaymentCancel from './pages/shop/paymentCancel'
+import PaymentLayout from './components/shop/payment/paymentLayout'
+import OrderDetail from './pages/admin/orderDetail'
+import MyOrders from './pages/shop/myOrders'
 
 function App() {
   let { isAuthenticated, user, isLoading } = useSelector(state => state.auth);
@@ -54,6 +59,7 @@ function App() {
           <Route path='products/edit/:id' element={<AddEditProduct />} />
           <Route path='category/add' element={<AddEditCategory />} />
           <Route path='orders' element={<Orders />} />
+          <Route path='orders/:id' element={<OrderDetail />} />
           <Route path='features' element={<Features />} />
         </Route>
         <Route path='/shop' element={<CheckAuth isAuthenticated={isAuthenticated} user={user?.role} isLoading={isLoading}> <ShopLayout /> </CheckAuth>}>
@@ -63,8 +69,13 @@ function App() {
           <Route path='cart' element={<Cart />} />
           <Route path='product/:id' element={<ProductDetail />} />
           <Route path='products' element={<Listing />} />
-          <Route path='checkout' element={<CheckoutScreen />} />
+          <Route path='products' element={<Listing />} />
+          <Route path='my-orders' element={<MyOrders />} />
         </Route>
+        <Route path='/payment' element={<CheckAuth isAuthenticated={isAuthenticated} user={user?.role} isLoading={isLoading}> <PaymentLayout /> </ CheckAuth >}>
+          <Route path="success" element={<PaymentSuccess />} />
+          <Route path="cancel" element={<PaymentCancel />} />
+        </Route >
         <Route path='/unAuth' element={<UnAuth />} />
       </Routes >
 

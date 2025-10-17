@@ -2,10 +2,12 @@ import React from "react";
 import { User, Heart, ShoppingBag, Settings, LogOut } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../features/auth/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const Account = () => {
     const { user, isLoading } = useSelector(state => state.auth);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleLogout = () => {
         dispatch(logout());
@@ -40,7 +42,8 @@ const Account = () => {
 
                 {/* Right Content */}
                 <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-8">
-                    <div className="bg-white/5 p-8 rounded-2xl hover:bg-white/10 transition border border-white/10 cursor-pointer">
+                    <div onClick={() => navigate('/shop/my-orders')}
+                        className="bg-white/5 p-8 rounded-2xl hover:bg-white/10 transition border border-white/10 cursor-pointer">
                         <ShoppingBag className="mb-4" size={28} />
                         <h3 className="text-lg font-semibold mb-2">My Orders</h3>
                         <p className="text-sm text-white/50">

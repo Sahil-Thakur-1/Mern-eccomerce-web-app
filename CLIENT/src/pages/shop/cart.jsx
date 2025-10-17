@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+
 import { useSelector, useDispatch } from "react-redux";
 import { Trash2, Plus, Minus, ShoppingBag, Tag } from "lucide-react";
 import { fetchCart, addToCart, deleteFromCart } from "../../features/shop/cartSlice";
@@ -15,18 +15,27 @@ const Cart = () => {
     // }, [dispatch]);
 
     const handleQuantityChange = (productId, change) => {
-        const item = cart.find((i) => i.productId._id === productId);
+        const item = cart.products.find((i) => i.productId === productId);
         if (!item) return;
 
         const newQuantity = item.quantity + change;
         if (newQuantity < 1) return;
 
-        dispatch(
-            addToCart({
-                productId,
-                quantity: change,
-            })
-        ).then(() => dispatch(fetchCart()));
+        if (change > 0) {
+            dispatch(
+                addToCart({
+                    productId,
+                    quantity: change,
+                })
+            ).then(() => dispatch(fetchCart()));
+        } else {
+            dispatch(
+                deleteFromCart({
+                    productId: productId,
+                    quantity: 1
+                })
+            ).then(() => dispatch(fetchCart()));
+        }
     };
 
     const handleRemoveItem = (productId) => {
@@ -103,7 +112,7 @@ const Cart = () => {
                                                 <div className="flex items-center bg-white/10 rounded-lg overflow-hidden border border-white/20">
                                                     <button
                                                         onClick={() =>
-                                                            handleQuantityChange(item.productId._id, -1)
+                                                            handleQuantityChange(item.productId, -1)
                                                         }
                                                         className="px-3 py-1.5 hover:bg-[#007bff]/20 transition-colors"
                                                     >
